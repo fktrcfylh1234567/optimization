@@ -1,18 +1,19 @@
 def fibonacci_method(f, a, b, n):
-    prev_ftmp = fibonacci_number(n)
-    top_ftmp = fibonacci_number(n + 1)
-    ltmp = a + (top_ftmp - prev_ftmp) / top_ftmp * (b - a)
-    rtmp = a + prev_ftmp / top_ftmp * (b - a)
+    fn = fibonacci_number(n + 1)
+    fn_prev = fibonacci_number(n)
 
-    for i in reversed(range(n)):
-        if f(ltmp) > f(rtmp):
-            a = ltmp
-            ltmp = rtmp
-            rtmp = a + b - ltmp
+    left = a + (fn - fn_prev) / fn * (b - a)
+    right = a + fn_prev / fn * (b - a)
+
+    for _ in reversed(range(n)):
+        if f(left) > f(right):
+            a = left
+            left = right
+            right = a + b - left
         else:
-            b = rtmp
-            rtmp = ltmp
-            ltmp = a + b - rtmp
+            b = right
+            right = left
+            left = a + b - right
 
     return (a + b) / 2
 
