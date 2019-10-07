@@ -1,25 +1,19 @@
 from math import cos
 
-from numpy import linspace
+from fibonacci import fibonacci_method
+from opt_passive import opt_passive_method
 
 
-def opt_passive(a, b, n):
-    x_prev = a
-    f_prev = f(a)
-    for x in linspace(a, b, num=n + 2, endpoint=True):
-        fi = f(x)
-        if fi > f_prev:
-            return x_prev
-        else:
-            x_prev = x
-            f_prev = fi
-
-
-def f(x):
+def func(x):
     return -0.5 * cos(x * 0.5) + 1
 
 
-x_min = opt_passive(-2.5, 1.5, 29)
-f_min = f(x_min)
+x_min = opt_passive_method(func, -2.5, 1.5, 29)
+f_min = func(x_min)
+print('min x =', x_min)
+print('min f(x) =', f_min)
+
+x_min = fibonacci_method(func, -2.5, 1.5, 29)
+f_min = func(x_min)
 print('min x =', x_min)
 print('min f(x) =', f_min)
