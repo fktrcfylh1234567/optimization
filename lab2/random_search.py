@@ -1,4 +1,9 @@
 import random
+from math import log
+
+
+def number(l, e, p):
+    return int(round(log(1 - p) / log(1 - e / l)))
 
 
 def random_search(f, a, b, n):

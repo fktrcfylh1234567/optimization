@@ -1,15 +1,31 @@
 from math import cos
 
-from random_search import random_search
-
-a = -2.5
-b = 1.5
+from random_search import random_search, number
 
 
 def func(x):
     return -0.5 * cos(x * 0.5) + 1
 
 
-x_min = random_search(func, a, b, 29)
+a = -2.5
+b = 1.5
+x_min = 0
+e = 0.1
+d = e / 2
+p = 0.95
 
-print(x_min)
+length = b - a
+n = number(length, e, p)
+
+
+def brute_force():
+    fails_count = 0
+    for i in range(10000):
+        random_min = random_search(func, a, b, n)
+        if abs(x_min - random_min) > d:
+            fails_count += 1
+    return fails_count / 100
+
+
+fails_count_percent = brute_force()
+print('fails in', fails_count_percent, '%')

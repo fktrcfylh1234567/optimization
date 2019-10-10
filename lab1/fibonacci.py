@@ -2,18 +2,19 @@ def fibonacci_method(f, a, b, n):
     fn = fibonacci_number(n + 1)
     fn_prev = fibonacci_number(n)
 
-    left = a + (fn - fn_prev) / fn * (b - a)
-    right = a + fn_prev / fn * (b - a)
+    x1 = a + (fn - fn_prev) / fn * (b - a)
+    x2 = a + fn_prev / fn * (b - a)
 
-    for _ in range(n):
-        if f(left) > f(right):
-            a = left
-            left = right
-            right = b - left + a
+    for i in range(n):
+        print('N =', i + 1, 'a =', a, 'b =', b, 'x1 =', x1, 'x2 =', x2)
+        if f(x1) > f(x2):
+            a = x1
+            x1 = x2
+            x2 = b - x1 + a
         else:
-            b = right
-            right = left
-            left = b - right + a
+            b = x2
+            x2 = x1
+            x1 = b - x2 + a
 
     return (a + b) / 2
 

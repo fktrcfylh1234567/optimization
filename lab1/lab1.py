@@ -11,12 +11,7 @@ def func(x):
 
 a = -2.5
 b = 1.5
-n = 29
-
-x_min = opt_passive_method(func, a, b, n)
-f_min = func(x_min)
-print('opt_passive min x =', x_min)
-print('opt_passive min f(x) =', f_min)
+n = 13
 
 x_min = fibonacci_method(func, a, b, n)
 f_min = func(x_min)
