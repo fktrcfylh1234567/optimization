@@ -1,7 +1,8 @@
 from math import cos
 
-from fibonacci import fibonacci_method
 from opt_passive import opt_passive_method
+
+from fibonacci import fibonacci_method
 
 
 def func(x):
