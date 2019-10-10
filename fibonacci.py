@@ -5,15 +5,15 @@ def fibonacci_method(f, a, b, n):
     left = a + (fn - fn_prev) / fn * (b - a)
     right = a + fn_prev / fn * (b - a)
 
-    for _ in reversed(range(n)):
+    for _ in range(n):
         if f(left) > f(right):
             a = left
             left = right
-            right = a + b - left
+            right = b - left + a
         else:
             b = right
             right = left
-            left = a + b - right
+            left = b - right + a
 
     return (a + b) / 2
 
