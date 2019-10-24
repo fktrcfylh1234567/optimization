@@ -11,10 +11,12 @@ def get_number(l, e):
 def opt_passive_method(f, a, b, n):
     x_prev = a
     f_prev = f(a)
+    i = 0
     for x in linspace(a, b, num=round(n + 2)):
         fi = f(x)
-        pretty_table.field_names = ["x", "f(x)"]
-        pretty_table.add_row([round(x, 4), round(fi, 4)])
+        pretty_table.field_names = ["Step", "x", "f(x)"]
+        pretty_table.add_row([i, round(x, 4), round(fi, 4)])
+        i += 1
         if fi > f_prev:
             print(pretty_table)
             return x_prev
