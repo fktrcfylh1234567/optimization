@@ -13,7 +13,7 @@ def opt_passive_method(f, a, b, n):
     f_prev = f(a)
     for x in linspace(a, b, num=round(n + 2)):
         fi = f(x)
-        pretty_table.field_names = ["x", "y"]
+        pretty_table.field_names = ["x", "f(x)"]
         pretty_table.add_row([round(x, 4), round(fi, 4)])
         if fi > f_prev:
             print(pretty_table)

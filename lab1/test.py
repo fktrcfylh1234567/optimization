@@ -20,14 +20,14 @@ class MyTestCase(unittest.TestCase):
     def test_opt_passive(self):
         print('Passive')
         n = get_number(4, e)
-        print('N =', n)
+        print('N =', round(n))
         opt_passive_min = opt_passive_method(func, a, b, n)
         self.assertAlmostEqual(first=0, second=opt_passive_min, delta=d)
 
     def test_fibonacci(self):
         print('Fibonacci')
         n = steps_count(4, e)
-        print('N =', n)
+        print('N =', round(n))
         fibonacci_min = fibonacci_method(func, a, b, n)
         self.assertAlmostEqual(first=0, second=fibonacci_min, delta=d)
 
