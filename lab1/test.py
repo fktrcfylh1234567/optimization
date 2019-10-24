@@ -2,7 +2,7 @@ import unittest
 from math import cos
 
 from opt_passive import opt_passive_method, get_number
-from fibonacci import fibonacci_method
+from fibonacci import fibonacci_method, steps_count
 
 
 def func(x):
@@ -18,14 +18,16 @@ d = e / 2
 
 class MyTestCase(unittest.TestCase):
     def test_opt_passive(self):
+        print('Passive')
         n = get_number(4, e)
-        print('N =', str(n))
+        print('N =', n)
         opt_passive_min = opt_passive_method(func, a, b, n)
-        print(opt_passive_min)
         self.assertAlmostEqual(first=0, second=opt_passive_min, delta=d)
 
     def test_fibonacci(self):
-        n = 13
+        print('Fibonacci')
+        n = steps_count(4, e)
+        print('N =', n)
         fibonacci_min = fibonacci_method(func, a, b, n)
         self.assertAlmostEqual(first=0, second=fibonacci_min, delta=d)
 

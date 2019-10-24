@@ -1,8 +1,6 @@
 from math import cos
 
-from opt_passive import opt_passive_method
-
-from fibonacci import fibonacci_method
+from fibonacci import fibonacci_method, steps_count
 
 
 def func(x):
@@ -11,7 +9,10 @@ def func(x):
 
 a = -2.5
 b = 1.5
-n = 13
+e = 0.1
+
+n = steps_count(b - a, e)
+print('N =', n)
 
 x_min = fibonacci_method(func, a, b, n)
 f_min = func(x_min)
