@@ -1,6 +1,6 @@
 from math import cos
 
-from random_search import random_search, number
+from random_search import random_search, steps_count
 
 
 def func(x):
@@ -15,7 +15,7 @@ d = e / 2
 p = 0.95
 
 length = b - a
-n = number(length, e, p)
+n = steps_count(length, e, p)
 
 
 def brute_force():
