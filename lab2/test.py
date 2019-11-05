@@ -1,6 +1,6 @@
 import unittest
 import numpy
-from random_search import random_search, steps_count
+from lab2.random_search import random_search, steps_count
 
 
 def func_1(x):

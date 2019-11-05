@@ -1,6 +1,6 @@
 from math import cos
 
-from random_search import random_search, steps_count
+from lab2.random_search import random_search, steps_count
 
 
 def func(x):

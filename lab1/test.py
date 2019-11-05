@@ -1,8 +1,8 @@
 import unittest
 from math import cos
 
-from opt_passive import opt_passive_method, get_number
-from fibonacci import fibonacci_method, steps_count
+from lab1.opt_passive import opt_passive_method, get_number
+from lab1.fibonacci import fibonacci_method, steps_count
 
 
 def func(x):
