@@ -4,11 +4,12 @@ from prettytable import PrettyTable
 pretty_table = PrettyTable()
 
 
-def get_number(l, e):
+def steps_count_opt(l, e):
     return 2 * l / e + 1
 
 
 def opt_passive_method(f, a, b, n):
+    print("Optimal passive method")
     x_prev = a
     f_prev = f(a)
     i = 0

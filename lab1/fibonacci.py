@@ -5,6 +5,7 @@ pretty_table = PrettyTable()
 
 
 def fibonacci_method(f, a, b, n):
+    print("Fibonacci method")
     fn = fibonacci_number(n + 1)
     fn_prev = fibonacci_number(n)
 
@@ -32,7 +33,7 @@ def fibonacci_method(f, a, b, n):
     return (a + b) / 2
 
 
-def steps_count(l, e):
+def steps_count_fib(l, e):
     i = 2
     fn = l / e
     while fibonacci_number(i) < fn:
