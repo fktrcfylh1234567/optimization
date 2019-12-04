@@ -21,4 +21,6 @@ def search(f, a, b, n):
         if y < f_min:
             x_min = x
             f_min = y
+
+    print(pretty_table)
     return x_min
