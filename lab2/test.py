@@ -1,6 +1,6 @@
 import unittest
 import numpy
-from lab2 import random_search, steps_count
+from lab2.random_search import search, steps_count
 
 
 def func_1(x):
@@ -25,14 +25,14 @@ class MyTestCase(unittest.TestCase):
     def test_opt_passive_uni(self):
         n = steps_count(l, e, p)
         print('N =', n)
-        random_min = random_search(func_1, a, b, n)
+        random_min = search(func_1, a, b, n)
         print(random_min)
         self.assertAlmostEqual(first=x_min_1, second=random_min, delta=d)
 
     def test_opt_passive_multi(self):
         n = steps_count(l, e, p)
         print('N =', n)
-        random_min = random_search(func_2, a, b, n)
+        random_min = search(func_2, a, b, n)
         print(random_min)
         self.assertAlmostEqual(first=x_min_2, second=random_min, delta=d)
 

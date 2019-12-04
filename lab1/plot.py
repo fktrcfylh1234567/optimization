@@ -5,12 +5,8 @@ from lab1.fibonacci import fibonacci_method, steps_count_fib
 from lab1.opt_passive import steps_count_opt, opt_passive_method
 
 
-def func(x):
-    return -0.5 * numpy.cos(x * 0.5) + 1
-
-
-def calculate(f, a, b, e):
-    x = numpy.arange(a, b, 0.01)
+def make_plot(f, a, b, e):
+    x = numpy.arange(a, b, 0.02)
     y = f(x)
 
     n = steps_count_opt(4, e)
@@ -19,12 +15,10 @@ def calculate(f, a, b, e):
     n = steps_count_fib(4, e)
     fibonacci_min = fibonacci_method(f, a, b, n)
 
-    lines = plt.plot(x, y, 'o')
-    plt.plot(opt_passive_min, f(opt_passive_min), 'o')
-    plt.plot(fibonacci_min, f(fibonacci_min), 'o')
+    lines = plt.plot(x, y, '-', label="-0.5cos(0.5x)+1")
+    plt.plot(opt_passive_min, f(opt_passive_min), 'o', label='passive')
+    plt.plot(fibonacci_min, f(fibonacci_min), 'o', label='fibonacci')
     plt.setp(lines[0], markersize=2)
     plt.grid(True)
+    plt.legend()
     plt.show()
-
-
-calculate(func, -2.5, 1.5, 0.1)

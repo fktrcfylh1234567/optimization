@@ -1,11 +1,12 @@
 from math import sqrt
 from prettytable import PrettyTable
 
-pretty_table = PrettyTable()
-
 
 def fibonacci_method(f, a, b, n):
     print("Fibonacci method")
+    pretty_table = PrettyTable()
+    pretty_table.field_names = ["Step", "a", "b", "x1", "x2", "f(x1)", "f(x2)"]
+
     fn = fibonacci_number(n + 1)
     fn_prev = fibonacci_number(n)
 
@@ -16,7 +17,6 @@ def fibonacci_method(f, a, b, n):
         fx1 = f(x1)
         fx2 = f(x2)
 
-        pretty_table.field_names = ["Step", "a", "b", "x1", "x2", "f(x1)", "f(x2)"]
         pretty_table.add_row(
             [i + 1, round(a, 4), round(b, 4), round(x1, 4), round(x2, 4), round(fx1, 4), round(fx2, 4)])
 
