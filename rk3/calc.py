@@ -8,4 +8,4 @@ def func(x, y):
 
 
 x, y = genetic_algorithm.search(func, -1, 1, -1, 1)
-plot.make_plot(func, -1, 1, -1, 1)
+plot.make_plot(func, -1, 1, -1, 1, x, y, func(x, y))

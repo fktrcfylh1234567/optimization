@@ -49,7 +49,7 @@ def search(f, x1, x2, y1, y2):
 
     population = [[random.uniform(x1, x2), random.uniform(y1, y2)] for i in range(4)]
 
-    for i in range(100):
+    for i in range(20):
         population = sorted(population, key=lambda a: f(a[0], a[1]), reverse=True)
         population += crossover(population, f)
         population = mutate(population)
