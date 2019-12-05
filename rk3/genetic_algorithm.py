@@ -1,3 +1,4 @@
+import functools
 import random
 
 from prettytable import PrettyTable
@@ -45,7 +46,7 @@ def reduce(population, f):
 
 def search(f, x1, x2, y1, y2):
     pretty_table = PrettyTable()
-    pretty_table.field_names = ["N", "x", "y", "Fit"]
+    pretty_table.field_names = ["N", "x", "y", "Fit", "Max fit", "Average Fit"]
 
     population = [[random.uniform(x1, x2), random.uniform(y1, y2)] for i in range(4)]
 
@@ -55,9 +56,19 @@ def search(f, x1, x2, y1, y2):
         population = mutate(population)
         population = reduce(population, f)
 
+        fit_sum = 0
+
+        for p in population:
+            fit_sum += f(p[0], p[1])
+
+        max_fit_person = max(population, key=lambda a: f(a[0], a[1]))
+        max_fit = f(max_fit_person[0], max_fit_person[1])
+        average_fit = fit_sum / len(population)
+
         for person in population:
             x, y = person
-            pretty_table.add_row([i + 1, round(x, 4), round(y, 4), round(f(x, y), 4)])
+            pretty_table.add_row(
+                [i + 1, round(x, 4), round(y, 4), round(f(x, y), 4), round(max_fit, 4), round(average_fit, 4)])
 
     print(pretty_table)
     return max(population, key=lambda a: f(a[0], a[1]))
