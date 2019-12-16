@@ -1,6 +1,6 @@
-import functools
 import random
 
+import matplotlib.pyplot as plt
 from prettytable import PrettyTable
 
 
@@ -47,14 +47,23 @@ def reduce(population, f):
 def search(f, x1, x2, y1, y2):
     pretty_table = PrettyTable()
     pretty_table.field_names = ["N", "x", "y", "Fit", "Max fit", "Average Fit"]
+    fig = plt.figure(figsize=(10, 5))
 
     population = [[random.uniform(x1, x2), random.uniform(y1, y2)] for i in range(4)]
 
-    for i in range(20):
+    for i in range(10):
         population = sorted(population, key=lambda a: f(a[0], a[1]), reverse=True)
         population += crossover(population, f)
         population = mutate(population)
         population = reduce(population, f)
+
+        for p in population:
+            fft_axes = fig.add_subplot(2, 5, i + 1)
+            fft_axes.set_title(str(i + 1))
+            fft_axes.set_autoscaley_on(False)
+            fft_axes.set_ylim([-1, 1])
+            fft_axes.set_xlim([-1, 1])
+            fft_axes.plot(p[0], p[1], 'x')
 
         fit_sum = 0
 
@@ -71,4 +80,6 @@ def search(f, x1, x2, y1, y2):
                 [i + 1, round(x, 4), round(y, 4), round(f(x, y), 4), round(max_fit, 4), round(average_fit, 4)])
 
     print(pretty_table)
+    plt.show()
+
     return max(population, key=lambda a: f(a[0], a[1]))
