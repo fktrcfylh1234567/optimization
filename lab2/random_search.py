@@ -8,7 +8,7 @@ def steps_count(l, e, p):
     return int(round(log(1 - p) / log(1 - e / l)))
 
 
-def search(f, a, b, n):
+def search(f, a, b, n, printing=True):
     pretty_table = PrettyTable()
     pretty_table.field_names = ["Step", "x", "y"]
 
@@ -22,5 +22,6 @@ def search(f, a, b, n):
             x_min = x
             f_min = y
 
-    print(pretty_table)
+    if printing:
+        print(pretty_table)
     return x_min
