@@ -1,5 +1,7 @@
 from copy import copy
+
 import matplotlib.pyplot as plt
+import numpy as np
 
 
 def main_criteria(choices, main, limits):
@@ -23,3 +25,19 @@ def pareto(choices, main_x, main_y, labels):
     plt.show()
 
     return choices.index(max(choices, key=lambda a: a[main_x] ** 2 + a[main_y] ** 2))
+
+
+def convolution(choices, weights):
+    choices = np.array(choices)
+    weights = np.array(weights)
+
+    choices_sum = np.abs(choices).sum(axis=0)
+    weights_sum = np.abs(weights).sum(axis=0)
+
+    choices = choices/choices_sum
+    weights = weights/weights_sum
+
+    res = np.dot(choices, weights)
+    index = np.where(res == np.amax(res))[0][0]
+
+    return index
