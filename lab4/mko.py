@@ -34,10 +34,21 @@ def convolution(choices, weights):
     choices_sum = np.abs(choices).sum(axis=0)
     weights_sum = np.abs(weights).sum(axis=0)
 
-    choices = choices/choices_sum
-    weights = weights/weights_sum
+    choices = choices / choices_sum
+    weights = weights / weights_sum
 
     res = np.dot(choices, weights)
-    index = np.where(res == np.amax(res))[0][0]
+    return np.where(res == np.amax(res))[0][0]
 
-    return index
+
+def saaty(choices, weights):
+    choices = [[sum(choices[i][cr] / choices[j][cr] for j in range(4)) for i in range(4)] for cr in range(4)]
+    choices = np.array(choices).transpose()
+    choices = choices / np.abs(choices).sum(axis=0)
+
+    weights = [sum(weights[i] / weights[j] for j in range(4)) for i in range(4)]
+    weights = np.array(weights).transpose()
+    weights = weights / np.abs(weights).sum(axis=0)
+
+    res = np.dot(choices, weights)
+    return np.where(res == np.amax(res))[0][0]

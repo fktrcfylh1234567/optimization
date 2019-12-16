@@ -17,3 +17,6 @@ print("Pareto choice:", labels[pareto_choice])
 weights = (2, 8, 4, 6)
 convolution_choice = mko.convolution(choices, weights)
 print("convolution choice:", labels[convolution_choice])
+
+saaty_choice = mko.saaty(choices, weights)
+print("Saaty choice:", labels[saaty_choice])
