@@ -14,11 +14,12 @@ d = 0.25
 k = 100
 e = 0.1
 p = 0.95
+r = 5
 
 x = np.array(list(x_min + i * (x_max - x_min) / k for i in range(k)))
 y = func(x)
 y_noise = np.random.normal(func(x), d)
-y_filtered = filter_noise(y_noise, 5, e, p, x_max, x_min)
+y_filtered = filter_noise(y_noise, r, e, p, x_max, x_min)
 
 line_func = plt.plot(x, y, '-', label="f(x) = sin(x) + 0.5")
 line_noise = plt.plot(x, y_noise, '-', label="noise")

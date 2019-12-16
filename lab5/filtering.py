@@ -6,7 +6,7 @@ from lab2 import random_search
 def filter_noise(y, r, e, p, x_max, x_min):
     a = search_weight(y, 0.5, e, p, x_max, x_min)
     print("a =", a)
-    return filter_func(y, a, 5)
+    return filter_func(y, a, r)
 
 
 def filter_func(f, a, r):
@@ -25,23 +25,23 @@ def search_weight(noise, weight, e, p, x_max, x_min):
 
 
 def pollution(f):
-    max = 0
+    max_diff = 0
     for i in range(len(f) - 1):
         dy = abs(f[i] - f[i - 1])
-        if dy > max:
-            max = dy
-    return max
+        if dy > max_diff:
+            max_diff = dy
+    return max_diff
 
 
 def difference(noise, filtered):
-    max = 0
+    max_diff = 0
     for i in range(len(noise) - 1):
         dy = abs(noise[i] - filtered[i - 1])
-        if dy > max:
-            max = dy
-    return max
+        if dy > max_diff:
+            max_diff = dy
+    return max_diff
 
 
 def j(f, a, weight):
-    filtered = filter_func(f, a, 5)
+    filtered = filter_func(f, a, 1)
     return weight * pollution(filtered) + (1 - weight) * difference(f, filtered)
