@@ -1,10 +1,17 @@
 import random
-
 import matplotlib.pyplot as plt
 from prettytable import PrettyTable
 
+fig = plt.figure(figsize=(10, 5))
+pretty_table = PrettyTable()
+pretty_table.field_names = ["N", "x", "y", "Fit", "Max fit", "Average Fit"]
 
-def select_person(population, f, fit_sum):
+
+def select_person(population, f):
+    fit_sum = 0
+    for p in population:
+        fit_sum += f(p[0], p[1])
+
     hit = random.uniform(0, 1)
     pos = 0
 
@@ -16,14 +23,14 @@ def select_person(population, f, fit_sum):
 
 def crossover(population, f):
     descendants = list()
-    fit_sum = 0
-
-    for p in population:
-        fit_sum += f(p[0], p[1])
 
     for i in range(2):
-        a = select_person(population, f, fit_sum)
-        b = select_person(population, f, fit_sum)
+        a = select_person(population, f)
+
+        a_index = population.index(a)
+        candidates = [population[i] for i in range(4) if i != a_index]
+        b = select_person(candidates, f)
+
         descendants.append([a[0], b[1]])
         descendants.append([b[0], a[1]])
 
@@ -45,25 +52,16 @@ def reduce(population, f):
 
 
 def search(f, x1, x2, y1, y2):
-    pretty_table = PrettyTable()
-    pretty_table.field_names = ["N", "x", "y", "Fit", "Max fit", "Average Fit"]
-    fig = plt.figure(figsize=(10, 5))
-
     population = [[random.uniform(x1, x2), random.uniform(y1, y2)] for i in range(4)]
 
-    for i in range(10):
+    for i in range(100):
         population = sorted(population, key=lambda a: f(a[0], a[1]), reverse=True)
         population += crossover(population, f)
         population = mutate(population)
         population = reduce(population, f)
 
-        for p in population:
-            fft_axes = fig.add_subplot(2, 5, i + 1)
-            fft_axes.set_title(str(i + 1))
-            fft_axes.set_autoscaley_on(False)
-            fft_axes.set_ylim([-1, 1])
-            fft_axes.set_xlim([-1, 1])
-            fft_axes.plot(p[0], p[1], 'x')
+        if (i + 1) % 10 == 0:
+            show_population(population, (i + 1) / 10)
 
         fit_sum = 0
 
@@ -83,3 +81,13 @@ def search(f, x1, x2, y1, y2):
     plt.show()
 
     return max(population, key=lambda a: f(a[0], a[1]))
+
+
+def show_population(population, i):
+    for p in population:
+        fft_axes = fig.add_subplot(2, 5, i)
+        fft_axes.set_title(str(round(i * 10)))
+        fft_axes.set_autoscaley_on(False)
+        fft_axes.set_ylim([-1, 1])
+        fft_axes.set_xlim([-1, 1])
+        fft_axes.plot(p[0], p[1], 'x')

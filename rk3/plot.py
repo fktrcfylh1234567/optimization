@@ -8,11 +8,11 @@ def make_plot(fun, x1, x2, y1, y2, x_max, y_max, z_max):
     ax = fig.add_subplot(111, projection='3d')
     x = np.arange(x1, x2, 0.05)
     y = np.arange(y1, y2, 0.05)
-    X, Y = np.meshgrid(x, y)
-    zs = np.array(fun(np.ravel(X), np.ravel(Y)))
-    Z = zs.reshape(X.shape)
+    meshgrid_x, meshgrid_y = np.meshgrid(x, y)
+    zs = np.array(fun(np.ravel(meshgrid_x), np.ravel(meshgrid_y)))
+    meshgrid_z = zs.reshape(meshgrid_x.shape)
 
-    ax.plot_surface(X, Y, Z)
+    ax.plot_surface(meshgrid_x, meshgrid_y, meshgrid_z)
 
     point = ax.plot([x_max], [y_max], [z_max], 'o')
     plt.setp(point[0], markersize=10)
