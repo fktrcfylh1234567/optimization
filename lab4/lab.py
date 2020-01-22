@@ -9,15 +9,18 @@ labels = ("МГТС", "Ростелеком", "Акадо", "QWERTY")
 dirs = (-1, 1, 1, 1)
 
 limits = (0.5, 0.2, 0.5)
-main_criteria_choice = main_criteria.main_criteria(choices, dirs, 0, limits)
-print("main criteria choice:", labels[main_criteria_choice])
+main_criteria_choice = main_criteria.main_criteria(choices, dirs, 0, limits, labels)
+print("Main criteria choice:", labels[main_criteria_choice])
+print()
 
 pareto_choice = pareto.pareto(choices, dirs, 1, 3, labels)
 print("Pareto choice:", labels[pareto_choice])
+print()
 
-weights = (-2, 8, 4, 6)
+weights = (-4, 5, 3, 6)
 convolution_choice = convolution.convolution(choices, weights)
-print("convolution choice:", labels[convolution_choice])
+print("Convolution choice:", labels[convolution_choice])
+print()
 
 saaty_choice = saaty.saaty(choices, weights, labels)
 print("Saaty choice:", labels[saaty_choice])

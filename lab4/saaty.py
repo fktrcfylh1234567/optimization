@@ -5,7 +5,7 @@ from prettytable import PrettyTable
 
 
 def saaty(choices, weights, labels):
-    consistency(choices, labels)
+    consistency(choices, weights, labels)
 
     choices = [[sum(choices[i][cr] / choices[j][cr] for j in range(4)) for i in range(4)] for cr in range(4)]
     choices = np.array(choices).transpose()
@@ -19,9 +19,11 @@ def saaty(choices, weights, labels):
     return np.where(res == np.amax(res))[0][0]
 
 
-def consistency(choices, labels):
+def consistency(choices, weights, labels):
     pretty_table = PrettyTable()
-    pretty_table.field_names = ["Choice", labels[0], labels[1], labels[2], labels[3]]
+    field_names = ["Choice"]
+    field_names += labels
+    pretty_table.field_names = field_names
 
     for crit in range(4):
         matrix = [[choices[i][crit] / choices[j][crit] for j in range(4)] for i in range(4)]
@@ -33,24 +35,46 @@ def consistency(choices, labels):
 
         print(pretty_table)
 
-        matrix = np.array(matrix)
-
-        # Own vectors
-        vecs = [reduce(lambda a, b: a * b, matrix[i]) ** (1 / 4) for i in range(4)]
-
-        # Sums
-        matrix = matrix.transpose()
-        s = np.array([sum(matrix[i]) for i in range(4)])
-
-        # Normalizing own vectors
-        vecs_norm = [vecs[i] / s[i] for i in range(4)]
-
-        # Own value
-        own_val = sum(s * vecs_norm)
-
-        consistency_index = (own_val - 4) / 3
-        consistency_ratio = consistency_index / 0.9
+        consistency_ratio = matrix_consistency(matrix)
 
         print("consistency ratio:", consistency_ratio)
         pretty_table.clear_rows()
         print()
+
+    matrix = [[abs(weights[i] / weights[j]) for j in range(4)] for i in range(4)]
+    pretty_table.field_names = ["Criterials", "1", "2", "3", "4"]
+
+    for i in range(4):
+        row = [str(i)]
+        row += matrix[i]
+        pretty_table.add_row(row)
+
+    print(pretty_table)
+
+    consistency_ratio = matrix_consistency(matrix)
+
+    print("consistency ratio:", consistency_ratio)
+    pretty_table.clear_rows()
+    print()
+
+
+def matrix_consistency(matrix):
+    matrix = np.array(matrix)
+
+    # Own vectors
+    vecs = [reduce(lambda a, b: a * b, matrix[i]) ** (1 / 4) for i in range(4)]
+
+    # Sums
+    matrix = matrix.transpose()
+    s = np.array([sum(matrix[i]) for i in range(4)])
+
+    # Normalizing own vectors
+    vecs_norm = [vecs[i] / s[i] for i in range(4)]
+
+    # Own value
+    own_val = sum(s * vecs_norm)
+
+    consistency_index = (own_val - 4) / 3
+    consistency_ratio = consistency_index / 0.9
+
+    return consistency_ratio

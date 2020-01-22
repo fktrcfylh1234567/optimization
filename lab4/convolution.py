@@ -12,4 +12,5 @@ def convolution(choices, weights):
     weights = weights / weights_sum
 
     res = np.dot(choices, weights)
+    print("Convolution:", res)
     return np.where(res == np.amax(res))[0][0]
