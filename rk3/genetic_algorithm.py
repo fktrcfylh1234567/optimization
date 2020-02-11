@@ -61,21 +61,7 @@ def search(f, x1, x2, y1, y2):
         population = reduce(population, f)
 
         if (i + 1) % 10 == 0:
-            show_population(population, (i + 1) / 10)
-
-        fit_sum = 0
-
-        for p in population:
-            fit_sum += f(p[0], p[1])
-
-        max_fit_person = max(population, key=lambda a: f(a[0], a[1]))
-        max_fit = f(max_fit_person[0], max_fit_person[1])
-        average_fit = fit_sum / len(population)
-
-        for person in population:
-            x, y = person
-            pretty_table.add_row(
-                [i + 1, round(x, 4), round(y, 4), round(f(x, y), 4), round(max_fit, 4), round(average_fit, 4)])
+            show_population(population, f, i + 1)
 
     print(pretty_table)
     plt.show()
@@ -83,10 +69,23 @@ def search(f, x1, x2, y1, y2):
     return max(population, key=lambda a: f(a[0], a[1]))
 
 
-def show_population(population, i):
+def show_population(population, f, i):
+    fit_sum = 0
     for p in population:
-        fft_axes = fig.add_subplot(2, 5, i)
-        fft_axes.set_title(str(round(i * 10)))
+        fit_sum += f(p[0], p[1])
+
+    max_fit_person = max(population, key=lambda a: f(a[0], a[1]))
+    max_fit = f(max_fit_person[0], max_fit_person[1])
+    average_fit = fit_sum / len(population)
+
+    for p in population:
+        x, y = p
+        pretty_table.add_row(
+            [i, round(x, 4), round(y, 4), round(f(x, y), 4), round(max_fit, 4), round(average_fit, 4)]
+        )
+
+        fft_axes = fig.add_subplot(2, 5, i / 10)
+        fft_axes.set_title(str(round(i)))
         fft_axes.set_autoscaley_on(False)
         fft_axes.set_ylim([-1, 1])
         fft_axes.set_xlim([-1, 1])
