@@ -1,4 +1,4 @@
-from math import sqrt
+from math import sqrt, floor
 from prettytable import PrettyTable
 
 
@@ -6,7 +6,8 @@ from prettytable import PrettyTable
 def fibonacci_method(f, a, b, n):
     print("Fibonacci method")
     pretty_table = PrettyTable()
-    pretty_table.field_names = ["Step", "a", "b", "len", "x1", "x2", "f(x1)", "f(x2)"]
+    pretty_table.field_names = ["Step", "a", "b", "len", "x1", "x2", "f(x1)",
+                                "f(x2)"]
 
     fn = fibonacci_number(n + 1)
     fn_prev = fibonacci_number(n)
@@ -17,9 +18,17 @@ def fibonacci_method(f, a, b, n):
     for i in range(n):
         fx1 = f(x1)
         fx2 = f(x2)
+        len = b - a
 
         pretty_table.add_row(
-            [i + 1, round(a, 4), round(b, 4), round(b - a, 4), round(x1, 4), round(x2, 4), round(fx1, 6), round(fx2, 6)])
+            [i + 1, format(floor(a * 10000) / 10000, '.4f'),
+             format(floor(b * 10000) / 10000, '.4f'),
+             format(floor(len * 10000) / 10000, '.4f'),
+             format(floor(x1 * 10000) / 10000, '.4f'),
+             format(floor(x2 * 10000) / 10000, '.4f'),
+             format(floor(fx1 * 1000000) / 1000000, '.6f'),
+             format(floor(fx2 * 1000000) / 1000000, '.6f')]
+        )
 
         if fx1 > fx2:
             a = x1

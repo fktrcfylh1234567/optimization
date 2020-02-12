@@ -1,3 +1,5 @@
+from math import floor
+
 import numpy
 from prettytable import PrettyTable
 import matplotlib.pyplot as plt
@@ -25,22 +27,22 @@ def func_2(x):
 def make_table(f):
     for q_i in q:
         n = [steps_count(b - a, q_i, p_i) for p_i in p]
-        row = [round(q_i, 2)] + n
-        pretty_table.add_row(row)
-
-    print(pretty_table)
-    pretty_table.clear_rows()
-
-    for q_i in q:
-        n = [steps_count(b - a, q_i, p_i) for p_i in p]
         x_min = [search(func_1, a, b, n_i) for n_i in n]
-        x_min = [round(x_i, 4) for x_i in x_min]
+        x_min = [format(floor(x_i * 10000) / 10000, '.4f') for x_i in x_min]
         row = [round(q_i, 2)] + x_min
         pretty_table.add_row(row)
 
     print(pretty_table)
     pretty_table.clear_rows()
 
+
+for i in q:
+    n = [steps_count(b - a, i, p_i) for p_i in p]
+    row = [round(i)] + n
+    pretty_table.add_row(row)
+
+print(pretty_table)
+pretty_table.clear_rows()
 
 make_table(func_1)
 make_table(func_2)

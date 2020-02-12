@@ -1,3 +1,5 @@
+from math import floor
+
 from numpy import linspace
 from prettytable import PrettyTable
 
@@ -16,7 +18,9 @@ def opt_passive_method(f, a, b, n):
     i = 0
     for x in linspace(a, b, num=round(n + 2)):
         fi = f(x)
-        pretty_table.add_row([i, round(x, 4), round(fi, 4)])
+        pretty_table.add_row(
+            [i, format(floor(x * 10000) / 10000, '.4f'),
+             format(floor(fi * 10000) / 10000, '.4f')])
         i += 1
         if fi > f_prev:
             print(pretty_table)
