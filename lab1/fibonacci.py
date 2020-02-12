@@ -6,7 +6,7 @@ from prettytable import PrettyTable
 def fibonacci_method(f, a, b, n):
     print("Fibonacci method")
     pretty_table = PrettyTable()
-    pretty_table.field_names = ["Step", "a", "b", "x1", "x2", "f(x1)", "f(x2)"]
+    pretty_table.field_names = ["Step", "a", "b", "len", "x1", "x2", "f(x1)", "f(x2)"]
 
     fn = fibonacci_number(n + 1)
     fn_prev = fibonacci_number(n)
@@ -19,7 +19,7 @@ def fibonacci_method(f, a, b, n):
         fx2 = f(x2)
 
         pretty_table.add_row(
-            [i + 1, round(a, 4), round(b, 4), round(x1, 4), round(x2, 4), round(fx1, 4), round(fx2, 4)])
+            [i + 1, round(a, 4), round(b, 4), round(b - a, 4), round(x1, 4), round(x2, 4), round(fx1, 6), round(fx2, 6)])
 
         if fx1 > fx2:
             a = x1
@@ -40,7 +40,7 @@ def steps_count_fib(l, e):
     fn = l / e
     while fibonacci_number(i) < fn:
         i += 1
-    return i
+    return i - 1
 
 
 # Функция вычисления числа Фиббоначи
