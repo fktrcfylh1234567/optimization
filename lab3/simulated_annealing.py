@@ -5,7 +5,7 @@ from prettytable import PrettyTable
 
 def search(f, a, b, d):
     pretty_table = PrettyTable()
-    pretty_table.field_names = ["T", "x", "f(x)", "Вероятность", "Причина"]
+    pretty_table.field_names = ["N", "T", "x", "f(x)", "Вероятность", "Причина"]
 
     t = 10000
     t_min = 0.1
@@ -15,9 +15,13 @@ def search(f, a, b, d):
 
     x_min = x
     y_min = y
+    i = 1
+
+    pretty_table.add_row([i, round(t, 4), round(x, 4), round(y, 4), 1, "Лучше"])
 
     while t > t_min:
         x_new = random.uniform(x - d, x + d)
+        i += 1
 
         if x_new < a:
             x_new = random.uniform(a, x + d)
@@ -30,15 +34,15 @@ def search(f, a, b, d):
         if y_new < y:
             x = x_new
             y = y_new
-            pretty_table.add_row([round(t, 4), round(x_new, 4), round(y_new, 4), 1, "Лучше"])
+            pretty_table.add_row([i, round(t, 4), round(x_new, 4), round(y_new, 4), 1, "Лучше"])
         else:
             propability = exp(-(y_new - y) / t)
             if random.uniform(0, 1) < propability:
                 x = x_new
                 y = y_new
-                pretty_table.add_row([round(t, 4), round(x_new, 4), round(y_new, 4), round(propability, 4), "Случайно"])
+                pretty_table.add_row([i, round(t, 4), round(x_new, 4), round(y_new, 4), round(propability, 40), "Случайно"])
             else:
-                pretty_table.add_row([round(t, 4), round(x_new, 4), round(y_new, 4), round(propability, 4), "Игнор"])
+                pretty_table.add_row([i, round(t, 4), round(x_new, 4), round(y_new, 4), round(propability, 40), "Игнор"])
                 continue
 
         if y < y_min:
