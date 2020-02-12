@@ -22,7 +22,7 @@ def filter_func(f, a, r):
 
 def search_weight(noise, weight, e, p, x_max, x_min):
     n = round(log(1 - p) / log(1 - e / (x_max - x_min)))
-    return random_search.search(lambda x: j(noise, x, weight), 0, 1, n, False)
+    return random_search.search(lambda x: j(noise, x, weight), 0, 1, n)
 
 
 def pollution(f):

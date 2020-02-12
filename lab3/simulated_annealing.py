@@ -5,7 +5,7 @@ from prettytable import PrettyTable
 
 def search(f, a, b, d):
     pretty_table = PrettyTable()
-    pretty_table.field_names = ["T", "x", "f(x)", "Propability", "Reason"]
+    pretty_table.field_names = ["T", "x", "f(x)", "Вероятность", "Причина"]
 
     t = 10000
     t_min = 0.1
