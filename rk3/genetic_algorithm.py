@@ -52,10 +52,12 @@ def reduce(population, f):
 
 
 def search(f, x1, x2, y1, y2):
-    population = [[random.uniform(x1, x2), random.uniform(y1, y2)] for i in range(4)]
+    population = [[random.uniform(x1, x2), random.uniform(y1, y2)] for i in
+                  range(4)]
 
     for i in range(100):
-        population = sorted(population, key=lambda a: f(a[0], a[1]), reverse=True)
+        population = sorted(population, key=lambda a: f(a[0], a[1]),
+                            reverse=True)
         population += crossover(population, f)
         population = mutate(population)
         population = reduce(population, f)
@@ -81,7 +83,8 @@ def show_population(population, f, i):
     for p in population:
         x, y = p
         pretty_table.add_row(
-            [i, round(x, 4), round(y, 4), round(f(x, y), 4), round(max_fit, 4), round(average_fit, 4)]
+            [i, round(x, 4), round(y, 4), round(f(x, y), 4), round(max_fit, 4),
+             round(average_fit, 4)]
         )
 
         fft_axes = fig.add_subplot(2, 5, i / 10)

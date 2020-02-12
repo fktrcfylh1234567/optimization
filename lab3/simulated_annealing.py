@@ -30,15 +30,15 @@ def search(f, a, b, d):
         if y_new < y:
             x = x_new
             y = y_new
-            pretty_table.add_row([round(t, 4), round(x, 4), round(y, 4), 1, "Better"])
+            pretty_table.add_row([round(t, 4), round(x_new, 4), round(y_new, 4), 1, "Лучше"])
         else:
             propability = exp(-(y_new - y) / t)
             if random.uniform(0, 1) < propability:
                 x = x_new
                 y = y_new
-                pretty_table.add_row([round(t, 4), round(x, 4), round(y, 4), round(propability, 4), "Random"])
+                pretty_table.add_row([round(t, 4), round(x_new, 4), round(y_new, 4), round(propability, 4), "Случайно"])
             else:
-                pretty_table.add_row([round(t, 4), round(x, 4), round(y, 4), round(propability, 4), "Ignored"])
+                pretty_table.add_row([round(t, 4), round(x_new, 4), round(y_new, 4), round(propability, 4), "Игнор"])
                 continue
 
         if y < y_min:

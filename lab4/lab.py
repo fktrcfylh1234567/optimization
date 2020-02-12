@@ -9,7 +9,8 @@ labels = ("МГТС", "Ростелеком", "Акадо", "QWERTY")
 dirs = (-1, 1, 1, 1)
 
 limits = (0.5, 0.2, 0.5)
-main_criteria_choice = main_criteria.main_criteria(choices, dirs, 0, limits, labels)
+main_criteria_choice = main_criteria.main_criteria(choices, dirs, 0, limits,
+                                                   labels)
 print("Main criteria choice:", labels[main_criteria_choice])
 print()
 

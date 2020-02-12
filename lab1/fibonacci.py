@@ -2,6 +2,7 @@ from math import sqrt
 from prettytable import PrettyTable
 
 
+# Метод Фиббоначи
 def fibonacci_method(f, a, b, n):
     print("Fibonacci method")
     pretty_table = PrettyTable()
@@ -33,6 +34,7 @@ def fibonacci_method(f, a, b, n):
     return (a + b) / 2
 
 
+# Функция вычисления числа итераций
 def steps_count_fib(l, e):
     i = 2
     fn = l / e
@@ -41,5 +43,6 @@ def steps_count_fib(l, e):
     return i
 
 
+# Функция вычисления числа Фиббоначи
 def fibonacci_number(n):
     return int(((1 + sqrt(5)) ** n - (1 - sqrt(5)) ** n) / (2 ** n * sqrt(5)))

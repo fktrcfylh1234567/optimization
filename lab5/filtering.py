@@ -13,7 +13,8 @@ def filter_func(f, a, r):
     for _ in range(r):
         filtered = copy(f)
         for i in range(len(f) - 1):
-            filtered[i] = f[i - 1] * (1 - a) / 2 + f[i] * a + f[i + 1] * (1 - a) / 2
+            filtered[i] = f[i - 1] * (1 - a) / 2 + f[i] * a + f[i + 1] * (
+                        1 - a) / 2
         f = filtered
 
     return f

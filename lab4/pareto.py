@@ -8,7 +8,8 @@ def pareto(choices, dirs, x, y, labels):
 
     for a in choices:
         for b in choices:
-            if a[x] * dirs[x] < b[x] * dirs[x] and a[y] * dirs[y] < b[y] * dirs[y]:
+            if a[x] * dirs[x] < b[x] * dirs[x] and a[y] * dirs[y] < b[y] * dirs[
+                y]:
                 pareto_set.remove(a)
                 break
 
@@ -19,7 +20,8 @@ def pareto(choices, dirs, x, y, labels):
     show_pareto(choices, labels, choices, utopia, x, y)
     show_pareto(choices, labels, pareto_set, utopia, x, y)
 
-    return choices.index(min(pareto_set, key=lambda a: pareto_dist((a[x], a[y]), utopia)))
+    return choices.index(
+        min(pareto_set, key=lambda a: pareto_dist((a[x], a[y]), utopia)))
 
 
 def pareto_dist(choice, utopia):

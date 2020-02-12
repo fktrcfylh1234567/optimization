@@ -7,7 +7,8 @@ from prettytable import PrettyTable
 def saaty(choices, weights, labels):
     consistency(choices, weights, labels)
 
-    choices = [[sum(choices[i][cr] / choices[j][cr] for j in range(4)) for i in range(4)] for cr in range(4)]
+    choices = [[sum(choices[i][cr] / choices[j][cr] for j in range(4)) for i in
+                range(4)] for cr in range(4)]
     choices = np.array(choices).transpose()
     choices = choices / np.abs(choices).sum(axis=0)
 
@@ -26,7 +27,8 @@ def consistency(choices, weights, labels):
     pretty_table.field_names = field_names
 
     for crit in range(4):
-        matrix = [[choices[i][crit] / choices[j][crit] for j in range(4)] for i in range(4)]
+        matrix = [[choices[i][crit] / choices[j][crit] for j in range(4)] for i
+                  in range(4)]
 
         for i in range(4):
             row = [labels[i]]
@@ -41,7 +43,8 @@ def consistency(choices, weights, labels):
         pretty_table.clear_rows()
         print()
 
-    matrix = [[abs(weights[i] / weights[j]) for j in range(4)] for i in range(4)]
+    matrix = [[abs(weights[i] / weights[j]) for j in range(4)] for i in
+              range(4)]
     pretty_table.field_names = ["Criterials", "1", "2", "3", "4"]
 
     for i in range(4):
