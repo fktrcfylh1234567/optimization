@@ -18,11 +18,10 @@ def search(f, a, b, d):
     i = 1
 
     pretty_table.add_row(
-        [i, format(t, '.4f'), format(x, '.4f'), format(y, '.4f'), 1, "Лучше"])
+        [i, format(t, '.4f'), format(x, '.4f'), format(y, '.4f'), 1, "Лучше +"])
 
     while t > t_min:
         x_new = random.uniform(x - d, x + d)
-        i += 1
 
         if x_new < a:
             x_new = random.uniform(a, x + d)
@@ -31,13 +30,14 @@ def search(f, a, b, d):
 
         y_new = f(x_new)
         t *= 0.95
+        i += 1
 
         if y_new < y:
             x = x_new
             y = y_new
             pretty_table.add_row(
                 [i, format(t, '.4f'), format(x_new, '.4f'),
-                 format(y_new, '.4f'), 1, "Лучше"])
+                 format(y_new, '.4f'), 1, "Лучше +"])
         else:
             propability = exp(-(y_new - y) / t)
             if random.uniform(0, 1) < propability:
@@ -47,13 +47,13 @@ def search(f, a, b, d):
                     [i, format(t, '.4f'), format(x_new, '.4f'),
                      format(y_new, '.4f'),
                      format(floor(propability * 10000) / 10000, '.4f'),
-                     "Случайно"])
+                     "Случайно +"])
             else:
                 pretty_table.add_row(
                     [i, format(t, '.4f'), format(x_new, '.4f'),
                      format(y_new, '.4f'),
                      format(floor(propability * 10000) / 10000, '.4f'),
-                     "Игнор"])
+                     "Игнор _"])
                 continue
 
         if y < y_min:

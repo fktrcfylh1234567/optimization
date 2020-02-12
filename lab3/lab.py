@@ -13,6 +13,6 @@ def func_2(x):
 
 
 make_plot(func_1, -2.5, 1.5, 1, 211, '-0.5cos(0.5x) + 1')
-make_plot(func_2, -2.5, 1.5, 1, 212, 'f(x)sin(5x)')
+# make_plot(func_2, -2.5, 1.5, 1, 212, 'f(x)sin(5x)')
 
 plt.show()
