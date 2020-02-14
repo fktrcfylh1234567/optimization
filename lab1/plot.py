@@ -21,4 +21,6 @@ def make_plot(f, a, b, e):
     plt.setp(lines[0], markersize=2)
     plt.grid(True)
     plt.legend()
+    plt.xlabel('x')
+    plt.ylabel('y')
     plt.show()

@@ -17,4 +17,6 @@ def make_plot(f, a, b, d, sub_plot, label):
 
     plt.setp(lines[0], markersize=2)
     plt.grid(True)
+    plt.xlabel('x')
+    plt.ylabel('y')
     plt.legend()
