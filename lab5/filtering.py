@@ -1,48 +1,110 @@
 from copy import copy
-from math import log
-from lab2 import random_search
+from math import log, floor
+from random import uniform
+
+from numpy.ma import arange
+from prettytable import PrettyTable
 
 
-def filter_noise(y, r, e, p, x_max, x_min):
-    a = search_weight(y, 0.5, e, p, x_max, x_min)
-    print("a =", a)
-    return filter_func(y, a, r)
+def filter_signal(signal, r, a):
+    filtered = copy(signal)
+    for i in range(len(signal) - floor(r / 2) - 1):
+        filtered[i] = sum(
+            (signal[i - floor(r / 2) + j] * a[j] for j in range(r))
+        )
+
+    return filtered
 
 
-def filter_func(f, a, r):
-    for _ in range(r):
-        filtered = copy(f)
-        for i in range(len(f) - 1):
-            filtered[i] = f[i - 1] * (1 - a) / 2 + f[i] * a + f[i + 1] * (
-                        1 - a) / 2
-        f = filtered
+def search_alpha_vector(signal, r, e, p, l):
+    pretty_table = PrettyTable()
+    pretty_table.field_names = ["h", "dis", "alpha", "w", "d"]
 
-    return f
+    dis_min = 1
+
+    for h in arange(0, 1.05, 0.1):
+        j, a, w, d = search_optimal_j(signal, r, h, e, p, l)
+        dis = dist(w, d)
+        pretty_table.add_row(
+            [
+                format(h, '.1f'),
+                format(dis, '.4f'),
+                [format(ai, '.4f') for ai in a],
+                format(w, '.4f'),
+                format(d, '.4f')
+            ]
+        )
+
+        if dis < dis_min:
+            dis_min = dis
+            h_opt = h
+            j_opt = j
+            a_opt = a
+            w_opt = w
+            d_opt = d
+
+    print(pretty_table)
+
+    pretty_table = PrettyTable()
+    pretty_table.field_names = ["h*", "J", "w", "d"]
+    pretty_table.add_row(
+        [
+            format(h_opt, '.1f'),
+            format(j_opt, '.4f'),
+            format(w_opt, '.4f'),
+            format(d_opt, '.4f')
+        ]
+    )
+    print(pretty_table)
+
+    return a_opt
 
 
-def search_weight(noise, weight, e, p, x_max, x_min):
-    n = round(log(1 - p) / log(1 - e / (x_max - x_min)))
-    return random_search.search(lambda x: j(noise, x, weight), 0, 1, n)
+def search_optimal_j(signal, r, h, e, p, l):
+    n = round(log(1 - p) / log(1 - e / l))
+
+    j_min = 1
+    a_opt = [0] * r
+
+    for _ in range(n):
+        a = [0] * r
+
+        a[floor(r / 2)] = uniform(0, 1)
+
+        for m in range(1, floor(r / 2)):
+            a[m] = uniform(0, 1 - sum(a[m + 1:r - m])) * 0.5
+            a[r - m - 1] = a[m]
+
+        a[0] = (1 - sum(a[1:r - 1])) * 0.5
+        a[r - 1] = a[0]
+
+        filtered = filter_signal(signal, r, a)
+        w = pollution(filtered)
+        d = difference(signal, filtered)
+        j = J(w, d, h)
+
+        if j < j_min:
+            j_min = j
+            a_opt = a
+            w_opt = w
+            d_opt = d
+
+    return j_min, a_opt, w_opt, d_opt
 
 
-def pollution(f):
-    max_diff = 0
-    for i in range(len(f) - 1):
-        dy = abs(f[i] - f[i - 1])
-        if dy > max_diff:
-            max_diff = dy
-    return max_diff
+def J(w, d, h):
+    return h * w + (1 - h) * d
+
+
+def pollution(filtered):
+    return max(
+        (abs(filtered[i] - filtered[i - 1]) for i in range(len(filtered) - 1))
+    )
 
 
 def difference(noise, filtered):
-    max_diff = 0
-    for i in range(len(noise) - 1):
-        dy = abs(noise[i] - filtered[i - 1])
-        if dy > max_diff:
-            max_diff = dy
-    return max_diff
+    return max((abs(noise[i] - filtered[i - 1]) for i in range(len(noise) - 1)))
 
 
-def j(f, a, weight):
-    filtered = filter_func(f, a, 1)
-    return weight * pollution(filtered) + (1 - weight) * difference(f, filtered)
+def dist(w, d):
+    return max(w, d)

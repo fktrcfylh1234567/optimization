@@ -1,7 +1,9 @@
-import matplotlib.pyplot as plt
+from math import pi
+
 import numpy as np
 
-from lab5.filtering import filter_noise
+from lab5.filtering import *
+from lab5.plot import plot
 
 
 def func(x):
@@ -9,27 +11,26 @@ def func(x):
 
 
 x_min = 0
-x_max = np.pi
-d = 0.25
-k = 100
+x_max = pi
+l = x_max - x_min
+
+d = 0.25  # noise
+k = 100  # sampling
+
+# Random search params
 e = 0.1
 p = 0.95
-r = 5
 
 x = np.array(list(x_min + i * (x_max - x_min) / k for i in range(k)))
 y = func(x)
-y_noise = np.random.normal(func(x), d)
-y_filtered = filter_noise(y_noise, r, e, p, x_max, x_min)
+y_noise = np.random.normal(y, d)
 
-line_func = plt.plot(x, y, '-', label="f(x) = sin(x) + 0.5")
-line_noise = plt.plot(x, y_noise, '-', label="noise")
-line_filtered = plt.plot(x, y_filtered, '-', label="filtered")
+# r = 3
+a = search_alpha_vector(y_noise, r=3, e=e, p=p, l=l)
+y_filtered = filter_signal(y_noise, r=3, a=a)
+plot(x, y, y_noise, y_filtered)
 
-plt.setp(line_func[0], markersize=2)
-plt.setp(line_noise[0], markersize=2)
-plt.setp(line_filtered[0], markersize=2)
-plt.grid(True)
-plt.legend()
-plt.xlabel('x')
-plt.ylabel('y')
-plt.show()
+# r = 5
+a = search_alpha_vector(y_noise, r=5, e=e, p=p, l=l)
+y_filtered = filter_signal(y_noise, r=5, a=a)
+plot(x, y, y_noise, y_filtered)
