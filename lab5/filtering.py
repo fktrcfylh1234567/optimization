@@ -5,6 +5,8 @@ from random import uniform
 from numpy.ma import arange
 from prettytable import PrettyTable
 
+from lab5.plot import show_points
+
 
 def filter_signal(signal, r, a):
     filtered = copy(signal)
@@ -19,12 +21,14 @@ def filter_signal(signal, r, a):
 def search_alpha_vector(signal, r, e, p, l):
     pretty_table = PrettyTable()
     pretty_table.field_names = ["h", "dis", "alpha", "w", "d"]
+    points = {'w': list(), 'd': list()}
 
     dis_min = 1
 
     for h in arange(0, 1.05, 0.1):
         j, a, w, d = search_optimal_j(signal, r, h, e, p, l)
         dis = dist(w, d)
+
         pretty_table.add_row(
             [
                 format(h, '.1f'),
@@ -34,6 +38,9 @@ def search_alpha_vector(signal, r, e, p, l):
                 format(d, '.4f')
             ]
         )
+
+        points['w'].append(w)
+        points['d'].append(d)
 
         if dis < dis_min:
             dis_min = dis
@@ -56,6 +63,8 @@ def search_alpha_vector(signal, r, e, p, l):
         ]
     )
     print(pretty_table)
+
+    show_points(points['w'], points['d'])
 
     return a_opt
 

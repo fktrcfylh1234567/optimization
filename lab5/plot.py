@@ -14,3 +14,15 @@ def plot(x, orig, noise, filtered):
     plt.xlabel('x')
     plt.ylabel('y')
     plt.show()
+
+
+def show_points(w, d):
+    for i in range(len(w)):
+        point = plt.plot(w[i], d[i], 'o')
+        plt.setp(point, markersize=10)
+
+    plt.grid(True)
+    plt.legend()
+    plt.xlabel('w')
+    plt.ylabel('d')
+    plt.show()

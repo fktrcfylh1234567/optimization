@@ -20,7 +20,7 @@ def opt_passive_method(f, a, b, n):
         fi = f(x)
         pretty_table.add_row(
             [i, format(floor(x * 10000) / 10000, '.4f'),
-             format(floor(fi * 10000) / 10000, '.4f')])
+             format(floor(fi * 1000000) / 1000000, '.6f')])
         i += 1
         if fi > f_prev:
             print(pretty_table)
